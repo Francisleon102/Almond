@@ -18,6 +18,11 @@ imageInfo(cv::Mat & img) {
     printf("Image Info: Width = %d, Height = %d, Channels = %d\n", width, height, channels);
 };
    
+// Copy constructor
+imageInfo(const imageInfo & other) {
+    // Copy the properties from another imageInfo object
+    printf("Copy constructor called.\n");
+}
 ~imageInfo() {
     // Destructor can be used for cleanup if needed 
     printf("ImageInfo object destroyed.\n");
