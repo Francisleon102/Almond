@@ -2,9 +2,14 @@
 #define IMAGEINFO_H
 #include "opencv4/opencv2/opencv.hpp"
 
-
 class imageInfo {
 
+private:
+    // Private member variables can be added here if needed
+    // For example, you might want to store the image width, height, and channels
+    int width;
+    int height;
+    int channels;
 
 public:
     

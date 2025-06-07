@@ -4,6 +4,7 @@
 #include "opencv4/opencv2/imgproc.hpp"
 #include <sysexits.h>
 #include "ImageInfo.h"
+#include "edges.h"
 #include <vector>
 #include "main.h"
 using namespace std;
@@ -15,7 +16,7 @@ void imgtoGrey(Mat & Img);
 
 cv::VideoCapture cap(0, cv::CAP_V4L2); //or use path /dev/video 
 
-const string path = "Images/cir1.jpg";
+const string path = "Images/test.jpg";
 // Function to read an image from a file
 Mat file() {
     Mat img = imread(path, IMREAD_COLOR);
@@ -53,10 +54,35 @@ void findImgContours(Mat & Img){
 
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
-    findContours(Img, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
-     cv::Mat contourImage = cv::Mat::zeros(Img.size(), CV_8UC3);
-    drawContours(contourImage,contours, -1, Scalar(0, 255, 0), cv::FILLED); // Draw all contours in green
-    imwrite("Contours.jpg", contourImage); // Save the image with contours drawn
-    std::cout << "Found contours: " << contours.size() << "\n";
+    /*
+    +findContours(Img, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+    +cv::Mat contourImage = cv::Mat::zeros(Img.size(), CV_8UC3);
+    +drawContours(contourImage,contours, -1, Scalar(0, 255, 0), cv::FILLED); // Draw all contours in green
+    +imwrite("Contours.jpg", contourImage); // Save the image with contours drawn
+    +std::cout << "Found contours: " << contours.size() << "\n";
+    */
+/*
+    //edge object
+    // Apply Canny edge detection
+    edges edgeDetector(Img);
+    edgeDetector.cannyEdgeDetection(Img);
+    // Perform Canny edge detection on the image
+    edgeDetector.laplacianEdgeDetection(Img);
+    // Perform Laplacian edge detection on the image
 
+    edgeDetector.sobelEdgeDetection(Img); // Perform Sobel edge detection on the image
+    edgeDetector.ScharrEdgeDetection(Img); // Perform Scharr edge detection on the image
+*/
 };
+ // Create an edges object with the image
+
+
+ //could use some asyncronos programming 
+ void cannyslider(int & lowthreshold , int & highthreshold, Mat & Img){
+    
+    edges edge(Img);
+    void (edges::*cannif)(Mat&) = &edges::cannyEdgeDetection;
+    (edge.*cannif)(Img);
+
+ }
+
