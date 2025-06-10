@@ -18,7 +18,14 @@ public:
         printf("Edges object created.\n");
     }
 
-    void cannyEdgeDetection(cv::Mat & img); //moved to cpp file
+    void cannyEdgeDetection(cv::Mat & img){
+           // Perform Canny edge detection on the image
+        cv::Mat edges;
+        cv::Canny(img, edges, 100, 200); // Adjust thresholds as needed
+        printf("Canny edge detection applied.\n");
+        // Optionally, save or display the edges image
+        cv::imwrite("Images/edges_output.jpg", edges);
+    } //moved to cpp file
 
     void laplacianEdgeDetection(cv::Mat & img) {
         // Perform Laplacian edge detection on the image

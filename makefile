@@ -16,7 +16,7 @@ main.o:
 
 # Clean build files
 clean:
-	rm -f main.o test_opencv
+	rm -f main.o test_opencv Images/edges_output.jpg Images/laplacian_edges_output.jpg
 
 run: test_opencv
 	./$(TARGET)

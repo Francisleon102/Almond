@@ -10,7 +10,8 @@
 using namespace std;
 using namespace cv;
 
-
+int low = 100;
+int high = 200;
 void findImgContours(Mat & Img);
 void imgtoGrey(Mat & Img);
 
@@ -79,10 +80,10 @@ void findImgContours(Mat & Img){
 
  //could use some asyncronos programming 
  void cannyslider(int & lowthreshold , int & highthreshold, Mat & Img){
-    
     edges edge(Img);
-    void (edges::*cannif)(Mat&) = &edges::cannyEdgeDetection;
-    (edge.*cannif)(Img);
+    edge.cannyEdgeDetection(Img,lowthreshold, highthreshold );
 
+
+    
  }
 
