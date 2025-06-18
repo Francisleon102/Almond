@@ -18,8 +18,10 @@ public:
         printf("Edges object created.\n");
     }
 
-    void cannyEdgeDetection(cv::Mat & img){
+    void cannyEdgeDetection(cv::Mat & img, int &low, int &high){
            // Perform Canny edge detection on the image
+        this->highThreshold = high;
+        this -> lowThreshold = low;
         cv::Mat edges;
         cv::Canny(img, edges, 100, 200); // Adjust thresholds as needed
         printf("Canny edge detection applied.\n");

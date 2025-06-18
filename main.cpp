@@ -12,8 +12,11 @@ using namespace cv;
 
 int low = 100;
 int high = 200;
+
+int * high_ptr = &high;
 void findImgContours(Mat & Img);
 void imgtoGrey(Mat & Img);
+void testslider(int pos, void * userdata);
 
 cv::VideoCapture cap(0, cv::CAP_V4L2); //or use path /dev/video 
 
@@ -31,7 +34,12 @@ Mat file() {
 int main() {
     Mat Img = file();
     findImgContours(Img); // Call the function to find contours in the image
+
+    namedWindow("winEdges",WINDOW_AUTOSIZE);
+   createTrackbar("Edges","winEdges",&low, high, testslider);
+
     return 0;
+    
 }
 
 
@@ -78,10 +86,22 @@ void findImgContours(Mat & Img){
  // Create an edges object with the image
 
 
+ void testslider(int pos, void * userdata){
+    high_ptr = static_cast<int*> (userdata);
+    cout << *high_ptr << endl;
+
+ }
+
  //could use some asyncronos programming 
  void cannyslider(int & lowthreshold , int & highthreshold, Mat & Img){
+
+  
+    
+  
     edges edge(Img);
+
     edge.cannyEdgeDetection(Img,lowthreshold, highthreshold );
+
 
 
     
