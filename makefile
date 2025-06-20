@@ -1,22 +1,23 @@
 CC = g++
 CFLAGS = -std=c++17 -Wall
-LIBS = `pkg-config --cflags --libs opencv4` 
+LIBS = `pkg-config --cflags --libs opencv4` -I/usr/local/imgui -ldl -lglfw
 
 SRC = main.cpp
-OBJ = main.o
+IMGUI_SRC = /usr/local/imgui/imgui.cpp
+OBJ = main.o imgui.o
 TARGET = test_opencv
 
-# Default rule
 all:
-	$(CC) $(CFLAGS) main.cpp -o test_opencv $(LIBS) 
+	$(CC) $(CFLAGS) main.o imgui.o -o test_opencv $(LIBS)
 
-# Compile source to object
 main.o:
-	$(CC) $(CFLAGS) -c main.cpp -o main.o
+	$(CC) $(CFLAGS) -I/usr/local/imgui -c main.cpp -o main.o
 
-# Clean build files
+imgui.o:
+	$(CC) $(CFLAGS) -I/usr/local/imgui -c /usr/local/imgui/imgui.cpp -o imgui.o
+
 clean:
-	rm -f main.o test_opencv Images/edges_output.jpg Images/laplacian_edges_output.jpg
+	rm -f main.o imgui.o test_opencv Images/edges_output.jpg Images/laplacian_edges_output.jpg
 
-run: test_opencv
-	./$(TARGET)
+run:
+	./test_opencv

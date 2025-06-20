@@ -15,7 +15,7 @@
                     "/usr/local/include/opencv4",
                     "/usr/include",
                     "/usr/lib/x86_64-linux-gnu",
-                    "/usr/local/include"
+                    "/usr/local/include/*"
                 ]
             },
             "defines": [],
