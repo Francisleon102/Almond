@@ -8,7 +8,7 @@ TARGET = test_opencv
 
 # Default rule
 all:
-	$(CC) $(CFLAGS) main.cpp -o test_opencv $(LIBS) -L/snap/core20/current/lib/x86_64-linux-gnu/libpthread.so.0 -lpthread
+	$(CC) $(CFLAGS) main.cpp -o test_opencv $(LIBS) 
 
 # Compile source to object
 main.o:

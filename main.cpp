@@ -7,6 +7,7 @@
 #include "edges.h"
 #include <vector>
 #include "main.h"
+
 using namespace std;
 using namespace cv;
 
@@ -35,8 +36,8 @@ int main() {
     Mat Img = file();
     findImgContours(Img); // Call the function to find contours in the image
 
-    namedWindow("winEdges",WINDOW_AUTOSIZE);
-   createTrackbar("Edges","winEdges",&low, high, testslider);
+    //namedWindow("winEdges",WINDOW_AUTOSIZE);
+   createTrackbar("Edges","winEdges",nullptr,100, testslider);
 
     return 0;
     
