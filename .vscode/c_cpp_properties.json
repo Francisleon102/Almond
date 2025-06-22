@@ -4,10 +4,20 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${vcpkgRoot}/x64-linux/include",
                 "/usr/local/include/opencv4",
-                "/usr/include"
+                "/usr/include",
+                "/usr/lib/x86_64-linux-gnu",
+                "/usr/local/include",
             ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "/usr/local/include/opencv4",
+                    "/usr/include",
+                    "/usr/lib/x86_64-linux-gnu",
+                    "/usr/local/include/*"
+                ]
+            },
             "defines": [],
             "cStandard": "c17",
             "cppStandard": "gnu++17",

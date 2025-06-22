@@ -7,6 +7,10 @@
 #include "edges.h"
 #include <vector>
 #include "main.h"
+#include <dlfcn.h>
+#include "imgui/imgui.h"
+
+
 using namespace std;
 using namespace cv;
 
@@ -35,8 +39,11 @@ int main() {
     Mat Img = file();
     findImgContours(Img); // Call the function to find contours in the image
 
-    namedWindow("winEdges",WINDOW_AUTOSIZE);
-   createTrackbar("Edges","winEdges",&low, high, testslider);
+    //namedWindow("winEdges",WINDOW_AUTOSIZE);
+   createTrackbar("Edges","winEdges",nullptr,100, testslider);
+
+
+   ImGui::Text("Hello, world %d", 123);
 
     return 0;
     
