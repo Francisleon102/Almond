@@ -22,7 +22,11 @@ void findImgContours(Mat & Img);
 void imgtoGrey(Mat & Img);
 void testslider(int pos, void * userdata);
 
-cv::VideoCapture cap(0, cv::CAP_V4L2); //or use path /dev/video 
+#ifdef _WIN32
+cv::VideoCapture cap(0, cv::CAP_DSHOW);
+#else
+cv::VideoCapture cap(0, cv::CAP_V4L2);
+#endif//or use path /dev/video 
 
 const string path = "Images/test.jpg";
 // Function to read an image from a file
