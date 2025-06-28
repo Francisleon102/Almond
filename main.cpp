@@ -16,13 +16,12 @@
 using namespace std;
 using namespace cv;
 
-int low = 100;
-int high = 200;
 
-int * high_ptr = &high;
+
+
 void findImgContours(Mat & Img);
 void imgtoGrey(Mat & Img);
-void testslider(int pos, void * userdata);
+void cannyslider(Mat & Img);
 
 #ifdef _WIN32
 cv::VideoCapture cap(0, cv::CAP_DSHOW);
@@ -56,13 +55,16 @@ int main() {
 }
 
 
-void colorToGray(Mat & Img) {
+Mat colorToGray(Mat & Img) {
+    Mat grayImg = Mat::zeros(Img.size(), CV_8UC1); // Create a grayscale image with the same size as the input image
     if (!Img.empty()) {
-        cvtColor(Img, Img, COLOR_BGR2GRAY); // Convert the image to grayscale
+        cvtColor(Img, grayImg, COLOR_BGR2GRAY); // Convert the image to grayscale
         printf("Image converted to grayscale.\n");
+        imwrite("Images/gray_image.jpg", grayImg); // Save the grayscale image
     } else {
         printf("Error: Image is empty.\n");
     }
+    return grayImg; // Return the grayscale image
 }
 
 void findImgContours(Mat & Img){
@@ -72,6 +74,11 @@ void findImgContours(Mat & Img){
     }else {
         colorToGray(Img); // Convert the image to grayscale before finding contours
         printf("Image is ready for contour detection.\n");
+
+        void  (*cannyslider_ptr)(Mat&) = &cannyslider; // Pointer to the cannyslider function
+        cannyslider_ptr(Img); // Call the cannyslider function with the image
+        printf("Canny edge detection applied.\n"); 
+
     }
 
     vector<vector<Point>> contours;
@@ -99,22 +106,13 @@ void findImgContours(Mat & Img){
  // Create an edges object with the image
 
 
- void testslider(int pos, void * userdata){
-    high_ptr = static_cast<int*> (userdata);
-    cout << *high_ptr << endl;
-
- }
+ 
 
  //could use some asyncronos programming 
- void cannyslider(int & lowthreshold , int & highthreshold, Mat & Img){
-
-
+ void cannyslider(Mat & Img){
     edges edge(Img);
-
-    edge.cannyEdgeDetection(Img,lowthreshold, highthreshold );
-
+    edge.cannyEdgeDetection(Img);
 
 
-    
  }
 

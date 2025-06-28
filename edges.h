@@ -6,8 +6,8 @@
 class edges {
 private:
     // Private member variables can be added here if needed
-    int lowThreshold = 0;
-    int highThreshold = 0;
+    int lowThreshold = 100;
+    int highThreshold = 200;
 
 
 
@@ -18,12 +18,11 @@ public:
         printf("Edges object created.\n");
     }
 
-    void cannyEdgeDetection(cv::Mat & img, int &low, int &high){
+    void cannyEdgeDetection(cv::Mat & img){
            // Perform Canny edge detection on the image
-        this->highThreshold = high;
-        this -> lowThreshold = low;
+    
         cv::Mat edges;
-        cv::Canny(img, edges, 100, 200); // Adjust thresholds as needed
+        cv::Canny(img, edges, lowThreshold, highThreshold); // Adjust thresholds as needed
         printf("Canny edge detection applied.\n");
         // Optionally, save or display the edges image
         cv::imwrite("Images/edges_output.jpg", edges);
