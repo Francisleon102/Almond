@@ -2,6 +2,8 @@
 #include "opencv4/opencv2/opencv.hpp"
 #include "opencv4/opencv2/highgui.hpp"
 #include "opencv4/opencv2/imgproc.hpp"
+#include "opencv2/core.hpp"
+#include <iostream>
 #include <sysexits.h>
 #include "ImageInfo.h"
 #include "edges.h"
@@ -44,10 +46,10 @@ int main() {
     findImgContours(Img); // Call the function to find contours in the image
 
     //namedWindow("winEdges",WINDOW_AUTOSIZE);
-   createTrackbar("Edges","winEdges",nullptr,100, testslider);
+   //createTrackbar("Edges","winEdges",nullptr,100, testslider);
 
 
-   ImGui::Text("Hello, world %d", 123);
+   // ImGui::Text("Hello, world %d", 123);
 
     return 0;
     
@@ -106,9 +108,7 @@ void findImgContours(Mat & Img){
  //could use some asyncronos programming 
  void cannyslider(int & lowthreshold , int & highthreshold, Mat & Img){
 
-  
-    
-  
+
     edges edge(Img);
 
     edge.cannyEdgeDetection(Img,lowthreshold, highthreshold );
