@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/leon/Projects/Almond/build",
+  "command": "/usr/bin/g++  -isystem /usr/local/include/opencv4 -g -std=gnu++17 -Wall -o CMakeFiles/test_opencv.dir/main.cpp.o -c /home/leon/Projects/Almond/main.cpp",
+  "file": "/home/leon/Projects/Almond/main.cpp",
+  "output": "CMakeFiles/test_opencv.dir/main.cpp.o"
+}
+]

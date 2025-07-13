@@ -1,0 +1,4 @@
+/home/leon/Projects/Almond/build/CMakeFiles/test_opencv.dir
+/home/leon/Projects/Almond/build/CMakeFiles/run.dir
+/home/leon/Projects/Almond/build/CMakeFiles/edit_cache.dir
+/home/leon/Projects/Almond/build/CMakeFiles/rebuild_cache.dir

@@ -4,6 +4,7 @@
 #include "opencv4/opencv2/imgproc.hpp"
 #include "opencv2/core.hpp"
 #include <iostream>
+#include <stdbool.h>
 #include <sysexits.h>
 #include "ImageInfo.h"
 #include "edges.h"
@@ -22,6 +23,7 @@ using namespace cv;
 void findImgContours(Mat & Img);
 void imgtoGrey(Mat & Img);
 void on_trackbar(int, void*);
+void imagesRange(int value, void* data);
 
 
 #ifdef _WIN32
@@ -45,13 +47,19 @@ int main() {
     Mat Img = file();
     findImgContours(Img); // Call the function to find contours in the image
 
-    Mat * Imgcopy = &Img;
-   on_trackbar(0, Imgcopy);
-    
+
+    cv::namedWindow("Edges", cv::WINDOW_AUTOSIZE);
+    int Max = 200;
+    int sliderValue = 50;
+    cv::createTrackbar("Slider", "Edges",&sliderValue,Max, imagesRange,&Img);
+
+   while (true) {
+    int key = cv::waitKey(30);
+    if (key == 27) break; // Exit on ESC
+}
     return 0;
     
 }
-
 
 Mat colorToGray(Mat & Img) {
     Mat grayImg = Mat::zeros(Img.size(), CV_8UC1); // Create a grayscale image with the same size as the input image
@@ -86,7 +94,6 @@ void findImgContours(Mat & Img){
     +std::cout << "Found contours: " << contours.size() << "\n";
     */
 
-
 };
  // Create an edges object with the image
  //could use some asyncronos programming 
@@ -97,13 +104,6 @@ void findImgContours(Mat & Img){
     
  }
 
- void on_trackbar(int v, void*) {
-     printf("Trackbar value changed.\n");
-    cv::namedWindow("Edges", cv::WINDOW_AUTOSIZE);
-    int Max = 200;
-    cv::createTrackbar("Slider", "Edges",&v,Max, imagesRange);
-
- }
    
    
 
