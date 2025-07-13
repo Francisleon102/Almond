@@ -10,7 +10,7 @@
 #include <vector>
 #include "main.h"
 #include <dlfcn.h>
-#include "imgui/imgui.h"
+
 
 
 using namespace std;
@@ -18,10 +18,11 @@ using namespace cv;
 
 
 
-
+// Function Prototypes
 void findImgContours(Mat & Img);
 void imgtoGrey(Mat & Img);
-void cannyslider(Mat & Img);
+void on_trackbar(int, void*);
+
 
 #ifdef _WIN32
 cv::VideoCapture cap(0, cv::CAP_DSHOW);
@@ -44,12 +45,9 @@ int main() {
     Mat Img = file();
     findImgContours(Img); // Call the function to find contours in the image
 
-    //namedWindow("winEdges",WINDOW_AUTOSIZE);
-   //createTrackbar("Edges","winEdges",nullptr,100, testslider);
-
-
-   // ImGui::Text("Hello, world %d", 123);
-
+    Mat * Imgcopy = &Img;
+   on_trackbar(0, Imgcopy);
+    
     return 0;
     
 }
@@ -75,10 +73,7 @@ void findImgContours(Mat & Img){
         colorToGray(Img); // Convert the image to grayscale before finding contours
         printf("Image is ready for contour detection.\n");
 
-        void  (*cannyslider_ptr)(Mat&) = &cannyslider; // Pointer to the cannyslider function
-        cannyslider_ptr(Img); // Call the cannyslider function with the image
-        printf("Canny edge detection applied.\n"); 
-
+        
     }
 
     vector<vector<Point>> contours;
@@ -90,29 +85,25 @@ void findImgContours(Mat & Img){
     +imwrite("Contours.jpg", contourImage); // Save the image with contours drawn
     +std::cout << "Found contours: " << contours.size() << "\n";
     */
-/*
-    //edge object
-    // Apply Canny edge detection
-    edges edgeDetector(Img);
-    edgeDetector.cannyEdgeDetection(Img);
-    // Perform Canny edge detection on the image
-    edgeDetector.laplacianEdgeDetection(Img);
-    // Perform Laplacian edge detection on the image
 
-    edgeDetector.sobelEdgeDetection(Img); // Perform Sobel edge detection on the image
-    edgeDetector.ScharrEdgeDetection(Img); // Perform Scharr edge detection on the image
-*/
+
 };
  // Create an edges object with the image
-
-
- 
-
  //could use some asyncronos programming 
- void cannyslider(Mat & Img){
-    edges edge(Img);
-    edge.cannyEdgeDetection(Img);
+ void imagesRange(int value, void* data){
+    Mat & Img = *static_cast<Mat*>(data) ;
+    edges e;
+    e.cannyEdgeDetection(Img);
+    
+ }
 
+ void on_trackbar(int v, void*) {
+     printf("Trackbar value changed.\n");
+    cv::namedWindow("Edges", cv::WINDOW_AUTOSIZE);
+    int Max = 200;
+    cv::createTrackbar("Slider", "Edges",&v,Max, imagesRange);
 
  }
+   
+   
 

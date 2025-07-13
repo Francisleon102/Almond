@@ -13,7 +13,7 @@ private:
 
 public:
     // Constructor
-    edges(cv::Mat & img) {
+    edges() {
         // Initialize the edges object with the image properties
         printf("Edges object created.\n");
     }
