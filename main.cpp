@@ -3,6 +3,7 @@
 #include "opencv4/opencv2/highgui.hpp"
 #include "opencv4/opencv2/imgproc.hpp"
 #include "opencv2/core.hpp"
+#include "imgproc.h"
 #include <iostream>
 #include <stdbool.h>
 #include <sysexits.h>
@@ -17,12 +18,10 @@
 using namespace std;
 using namespace cv;
 
-
-
 // Function Prototypes
 void findImgContours(Mat & Img);
 void imgtoGrey(Mat & Img);
-void on_trackbar(int, void*);
+void on_trackbar(Mat & M);
 void imagesRange(int value, void* data);
 
 
@@ -46,39 +45,30 @@ Mat file() {
 int main() {
     Mat Img = file();
     findImgContours(Img); // Call the function to find contours in the image
-
-
-    cv::namedWindow("Edges", cv::WINDOW_AUTOSIZE);
-    int Max = 200;
-    int sliderValue = 50;
-    cv::createTrackbar("Slider", "Edges",&sliderValue,Max, imagesRange,&Img);
-
-   while (true) {
-    int key = cv::waitKey(30);
-    if (key == 27) break; // Exit on ESC
-}
+    on_trackbar(Img);
+    printf("Ontrack was called ~");
     return 0;
     
 }
 
-Mat colorToGray(Mat & Img) {
-    Mat grayImg = Mat::zeros(Img.size(), CV_8UC1); // Create a grayscale image with the same size as the input image
-    if (!Img.empty()) {
-        cvtColor(Img, grayImg, COLOR_BGR2GRAY); // Convert the image to grayscale
-        printf("Image converted to grayscale.\n");
-        imwrite("Images/gray_image.jpg", grayImg); // Save the grayscale image
-    } else {
-        printf("Error: Image is empty.\n");
-    }
-    return grayImg; // Return the grayscale image
+void on_trackbar(Mat & M){
+   cv::namedWindow("Edges", cv::WINDOW_AUTOSIZE);
+    int Max = 200;
+    int sliderValue = 50;
+    cv::createTrackbar("Slider", "Edges",&sliderValue,Max, imagesRange,&M);
+    cv::waitKey(0);
 }
+
+
 
 void findImgContours(Mat & Img){
     if (Img.channels() != 3) {
         printf("Error: Image must have 3 channels (RGB).\n");
 
     }else {
-        colorToGray(Img); // Convert the image to grayscale before finding contours
+        imgproc I;
+        Mat (imgproc::*gray)(Mat&) = &imgproc::Gray; // Convert the image to grayscale before finding contours
+        Mat grayOut = (I.*gray)(Img);
         printf("Image is ready for contour detection.\n");
 
         
