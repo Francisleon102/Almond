@@ -2,8 +2,8 @@ CC      = g++
 CXXFLAGS= -std=c++17 -Wall `pkg-config --cflags opencv4`
 LDFLAGS = `pkg-config --libs opencv4`
 
-SRC     = main.cpp 
-OBJ     = main.o 
+SRC     = main.cpp imgproc.cpp
+OBJ     = main.o imgproc.o
 TARGET  = test_opencv
 COMMAND = LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0 ./test_opencv
 

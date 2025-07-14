@@ -30,7 +30,7 @@ cv::VideoCapture cap(0, cv::CAP_DSHOW);
 cv::VideoCapture cap(0, cv::CAP_V4L2);
 #endif//or use path /dev/video 
 
-const string path = "Images/test.jpg";
+const string path = "Images/a1.jpg";
 // Function to read an image from a file
 Mat file() {
     Mat img = imread(path, IMREAD_COLOR);
@@ -92,6 +92,7 @@ void findImgContours(Mat & Img){
     e.cannyEdgeDetection(Img, low, 200 );
     e.laplacianEdgeDetection(Img);
 
+    I.Display(Img);
     
  }
 

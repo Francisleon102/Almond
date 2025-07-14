@@ -21,6 +21,12 @@ public:
     }
 
     cv::Mat Resize(cv::Mat & Img, int h, int w);
+
+    void Contours();
+
+    /// @brief //display Image in Context
+    /// @param M 
+    void Display(cv::Mat  M); 
     
     //more to come 
     

@@ -14,7 +14,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 # Define source files
 set(SRC_FILES
-    main.cpp
+    main.cpp imgproc.cpp
     # Add other source files here if needed, e.g., edges.cpp
 )
 

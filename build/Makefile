@@ -142,6 +142,30 @@ run/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/build
 .PHONY : run/fast
 
+imgproc.o: imgproc.cpp.o
+.PHONY : imgproc.o
+
+# target to build an object file
+imgproc.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_opencv.dir/build.make CMakeFiles/test_opencv.dir/imgproc.cpp.o
+.PHONY : imgproc.cpp.o
+
+imgproc.i: imgproc.cpp.i
+.PHONY : imgproc.i
+
+# target to preprocess a source file
+imgproc.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_opencv.dir/build.make CMakeFiles/test_opencv.dir/imgproc.cpp.i
+.PHONY : imgproc.cpp.i
+
+imgproc.s: imgproc.cpp.s
+.PHONY : imgproc.s
+
+# target to generate assembly for a file
+imgproc.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_opencv.dir/build.make CMakeFiles/test_opencv.dir/imgproc.cpp.s
+.PHONY : imgproc.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -176,6 +200,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... run"
 	@echo "... test_opencv"
+	@echo "... imgproc.o"
+	@echo "... imgproc.i"
+	@echo "... imgproc.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

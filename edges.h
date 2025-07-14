@@ -15,7 +15,7 @@ public:
         // Initialize the edges object with the image properties
         printf("Edges object created.\n");
     }
-    void cannyEdgeDetection(cv::Mat & img, double low , double high){
+    void cannyEdgeDetection(cv::Mat & img, double  & low , double high){
         cv::Mat edges;
         cv::Canny(img, edges, low, high); 
         printf("Canny edge detection applied.\n");

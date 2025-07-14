@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/leon/Projects/Almond/imgproc.cpp" "CMakeFiles/test_opencv.dir/imgproc.cpp.o" "gcc" "CMakeFiles/test_opencv.dir/imgproc.cpp.o.d"
   "/home/leon/Projects/Almond/main.cpp" "CMakeFiles/test_opencv.dir/main.cpp.o" "gcc" "CMakeFiles/test_opencv.dir/main.cpp.o.d"
   )
 
