@@ -13,8 +13,6 @@
 #include "main.h"
 #include <dlfcn.h>
 
-
-
 using namespace std;
 using namespace cv;
 
@@ -24,6 +22,7 @@ void imgtoGrey(Mat & Img);
 void on_trackbar(Mat & M);
 void imagesRange(int value, void* data);
 
+imgproc I;
 
 #ifdef _WIN32
 cv::VideoCapture cap(0, cv::CAP_DSHOW);
@@ -55,7 +54,7 @@ void on_trackbar(Mat & M){
    cv::namedWindow("Edges", cv::WINDOW_AUTOSIZE);
     int Max = 200;
     int sliderValue = 50;
-    cv::createTrackbar("Slider", "Edges",&sliderValue,Max, imagesRange,&M);
+    cv::createTrackbar("Slider", "Edges",&sliderValue,Max, imagesRange, &M);  //SilderVslue is mapped to int value in imageRange Function 
     cv::waitKey(0);
 }
 
@@ -66,11 +65,10 @@ void findImgContours(Mat & Img){
         printf("Error: Image must have 3 channels (RGB).\n");
 
     }else {
-        imgproc I;
+        
         Mat (imgproc::*gray)(Mat&) = &imgproc::Gray; // Convert the image to grayscale before finding contours
         Mat grayOut = (I.*gray)(Img);
         printf("Image is ready for contour detection.\n");
-
         
     }
 
@@ -85,12 +83,15 @@ void findImgContours(Mat & Img){
     */
 
 };
- // Create an edges object with the image
+
  //could use some asyncronos programming 
  void imagesRange(int value, void* data){
-    Mat & Img = *static_cast<Mat*>(data) ;
+    Mat & Img = *static_cast<Mat*>(data) ;  // castiing *data to Mat 
+    double low = static_cast<double>(value);
     edges e;
-    e.cannyEdgeDetection(Img);
+    e.cannyEdgeDetection(Img, low, 200 );
+    e.laplacianEdgeDetection(Img);
+
     
  }
 

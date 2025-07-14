@@ -34,7 +34,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 # Add a convenient 'run' target
 add_custom_target(run
     COMMAND ${CMAKE_COMMAND} -E echo "Running ${PROJECT_NAME} with LD_PRELOAD..."
-    COMMAND env LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0 ./test_opencv
+    COMMAND  LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0 ./test_opencv
     DEPENDS ${PROJECT_NAME}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )

@@ -68,7 +68,7 @@ include CMakeFiles/run.dir/progress.make
 
 CMakeFiles/run: test_opencv
 	cd /home/leon/Projects/Almond && /usr/bin/cmake -E echo Running\ test_opencv\ with\ LD_PRELOAD...
-	cd /home/leon/Projects/Almond && env LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0 ./test_opencv
+	cd /home/leon/Projects/Almond && LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0 ./test_opencv
 
 run: CMakeFiles/run
 run: CMakeFiles/run.dir/build.make

@@ -9,24 +9,19 @@ private:
     int lowThreshold = 100;
     int highThreshold = 200;
 
-
-
 public:
     // Constructor
     edges() {
         // Initialize the edges object with the image properties
         printf("Edges object created.\n");
     }
-
-    void cannyEdgeDetection(cv::Mat & img){
-           // Perform Canny edge detection on the image
-    
+    void cannyEdgeDetection(cv::Mat & img, double low , double high){
         cv::Mat edges;
-        cv::Canny(img, edges, lowThreshold, highThreshold); // Adjust thresholds as needed
+        cv::Canny(img, edges, low, high); 
         printf("Canny edge detection applied.\n");
         // Optionally, save or display the edges image
         cv::imwrite("Images/edges_output.jpg", edges);
-    } //moved to cpp file
+    } 
 
     void laplacianEdgeDetection(cv::Mat & img) {
         // Perform Laplacian edge detection on the image
