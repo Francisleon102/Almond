@@ -1,0 +1,4 @@
+
+
+Threads... 
+finding Contours ... Identiftying blobs (tries)_ //obsidian notes 

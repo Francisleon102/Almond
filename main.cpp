@@ -22,6 +22,8 @@ void imgtoGrey(Mat & Img);
 void on_trackbar(Mat & M);
 void imagesRange(int value, void* data);
 
+/// @brief Image processing functions here 
+/// @param 
 imgproc I;
 
 #ifdef _WIN32
@@ -30,7 +32,7 @@ cv::VideoCapture cap(0, cv::CAP_DSHOW);
 cv::VideoCapture cap(0, cv::CAP_V4L2);
 #endif//or use path /dev/video 
 
-const string path = "Images/a1.jpg";
+const string path = "Images/frame.jpg";
 // Function to read an image from a file
 Mat file() {
     Mat img = imread(path, IMREAD_COLOR);
