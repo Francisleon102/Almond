@@ -1,8 +1,14 @@
 [
 {
   "directory": "/home/leon/Projects/Almond/build",
-  "command": "/usr/bin/g++  -isystem /usr/local/include/opencv4 -g -std=gnu++17 -Wall -o CMakeFiles/test_opencv.dir/main.cpp.o -c /home/leon/Projects/Almond/main.cpp",
+  "command": "/usr/bin/g++-12  -isystem /usr/local/include/opencv4 -g -std=gnu++17 -Wall -o CMakeFiles/test_opencv.dir/main.cpp.o -c /home/leon/Projects/Almond/main.cpp",
   "file": "/home/leon/Projects/Almond/main.cpp",
   "output": "CMakeFiles/test_opencv.dir/main.cpp.o"
+},
+{
+  "directory": "/home/leon/Projects/Almond/build",
+  "command": "/usr/bin/g++-12  -isystem /usr/local/include/opencv4 -g -std=gnu++17 -Wall -o CMakeFiles/test_opencv.dir/imgproc.cpp.o -c /home/leon/Projects/Almond/imgproc.cpp",
+  "file": "/home/leon/Projects/Almond/imgproc.cpp",
+  "output": "CMakeFiles/test_opencv.dir/imgproc.cpp.o"
 }
 ]

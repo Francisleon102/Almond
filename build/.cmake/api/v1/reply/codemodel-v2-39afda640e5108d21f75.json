@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.10"
@@ -20,7 +20,7 @@
 					]
 				}
 			],
-			"name" : "",
+			"name" : "Debug",
 			"projects" : 
 			[
 				{
@@ -41,14 +41,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "run::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-run-bc5639148a3b3bea118f.json",
+					"jsonFile" : "target-run-Debug-bc5639148a3b3bea118f.json",
 					"name" : "run",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "test_opencv::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-test_opencv-e44efb9e206c9bb6d84f.json",
+					"jsonFile" : "target-test_opencv-Debug-7beea55c945d82e8c697.json",
 					"name" : "test_opencv",
 					"projectIndex" : 0
 				}
