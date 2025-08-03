@@ -47,7 +47,7 @@ Mat file() {
 int main() {
     Mat main_Img = file();
     Mat Img = main_Img.clone();
-    findImgContours(Img); // Call the function to find contours in the image
+   // findImgContours(Img); // Call the function to find contours in the image
     on_trackbar(Img);
     printf("Ontrack was called ~");
     return 0;
@@ -71,26 +71,16 @@ void on_trackbar(Mat & M){
 
 
 void findImgContours(Mat & Img){
-    if (Img.channels() != 3) {
-        printf("Error: Image must have 3 channels (RGB).\n");
-
-    }else {
-        
-        Mat (imgproc::*gray)(Mat&) = &imgproc::Gray; // Convert the image to grayscale before finding contours
-        Mat grayOut = (I.*gray)(Img);
-        printf("Image is ready for contour detection.\n");
-        
-    }
-
+   
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
-    /*
-    +findContours(Img, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
-    +cv::Mat contourImage = cv::Mat::zeros(Img.size(), CV_8UC3);
-    +drawContours(contourImage,contours, -1, Scalar(0, 255, 0), cv::FILLED); // Draw all contours in green
-    +imwrite("Contours.jpg", contourImage); // Save the image with contours drawn
-    +std::cout << "Found contours: " << contours.size() << "\n";
-    */
+
+    findContours(Img, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+    cv::Mat contourImage = cv::Mat::zeros(Img.size(), CV_8UC3);
+    drawContours(contourImage,contours, -1, Scalar(0, 255, 0), cv::FILLED); // Draw all contours in green
+    imwrite("Contours.jpg", contourImage); // Save the image with contours drawn
+    std::cout << "Found contours: " << contours.size() << "\n";
+    
 
 };
 
@@ -102,6 +92,7 @@ void findImgContours(Mat & Img){
     Mat t = e.cannyEdgeDetection(Img, low,200);
    // e.laplacianEdgeDetection(Img);
     I.Display(t);
+    findImgContours(t);
     
  }
 
