@@ -1,4 +1,6 @@
 
 
-Threads... 
-finding Contours ... Identiftying blobs (tries)_ //obsidian notes 
+Threads... **
+finding Contours ... Identiftying blobs (tries)_ //obsidian notes **
+fourier transform for image filtering ***
+Integrals for center detection 

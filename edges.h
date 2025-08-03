@@ -15,23 +15,24 @@ public:
         // Initialize the edges object with the image properties
         printf("Edges object created.\n");
     }
-    void cannyEdgeDetection(cv::Mat & img, double  & low , double high){
-        cv::Mat edges;
-        cv::Canny(img, edges, low, high); 
+    cv::Mat cannyEdgeDetection(cv::Mat & img, double  & low , double high){
+        cv::Mat Cannyedges;
+        cv::Canny(img, Cannyedges, low, high); 
         printf("Canny edge detection applied.\n");
         // Optionally, save or display the edges image
-        cv::imwrite("Images/edges_output.jpg", edges);
+        cv::imwrite("Images/canny_edges_output.jpg", Cannyedges);
+        return Cannyedges;
     } 
 
     void laplacianEdgeDetection(cv::Mat & img) {
         // Perform Laplacian edge detection on the image
-        cv::Mat edges;
-        cv::Laplacian(img, edges, CV_16S, 3); // Use CV_16S to avoid overflow
-        cv::convertScaleAbs(edges, edges); // Convert back to CV_8U
+        cv::Mat Lapedges;
+        cv::Laplacian(img, Lapedges, CV_16S, 3); // Use CV_16S to avoid overflow
+        cv::convertScaleAbs(Lapedges, Lapedges); // Convert back to CV_8U
         printf("Laplacian edge detection applied.\n");
         
         // Optionally, save or display the edges image
-        cv::imwrite("Images/laplacian_edges_output.jpg", edges);
+        cv::imwrite("Images/laplacian_edges_output.jpg", Lapedges);
     }
 
 

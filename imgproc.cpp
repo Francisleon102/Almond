@@ -13,15 +13,8 @@ void imgproc::Display(cv::Mat M){
 else {
 
     resize(M, M, Size(640, 480));
-    imshow("Conext",M);
-    // Wait for ESC key to exit
-        while (true) {
-            int key = cv::waitKey(30);
-            if (key == 27) { // 27 is the ASCII code for ESC
-                break;
-            }
-        }
-        cv::destroyWindow("Conext");
+    imshow("Context",M);
+ 
     
 }
 

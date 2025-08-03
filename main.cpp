@@ -6,6 +6,7 @@
 #include "imgproc.h"
 #include <iostream>
 #include <stdbool.h>
+#include <thread>
 #include <sysexits.h>
 #include "ImageInfo.h"
 #include "edges.h"
@@ -44,7 +45,8 @@ Mat file() {
 }
 
 int main() {
-    Mat Img = file();
+    Mat main_Img = file();
+    Mat Img = main_Img.clone();
     findImgContours(Img); // Call the function to find contours in the image
     on_trackbar(Img);
     printf("Ontrack was called ~");
@@ -55,9 +57,15 @@ int main() {
 void on_trackbar(Mat & M){
    cv::namedWindow("Edges", cv::WINDOW_AUTOSIZE);
     int Max = 200;
-    int sliderValue = 50;
+    int sliderValue = 110;
     cv::createTrackbar("Slider", "Edges",&sliderValue,Max, imagesRange, &M);  //SilderVslue is mapped to int value in imageRange Function 
-    cv::waitKey(0);
+        // Add an event loop to keep the window and trackbar responsive
+    while (true) {
+        //I.Display(M);
+        int key = cv::waitKey(30);
+        if (key == 27) break; // Exit on ESC
+    }
+    cv::destroyWindow("Edges");
 }
 
 
@@ -90,11 +98,10 @@ void findImgContours(Mat & Img){
  void imagesRange(int value, void* data){
     Mat & Img = *static_cast<Mat*>(data) ;  // castiing *data to Mat 
     double low = static_cast<double>(value);
-    edges e;
-    e.cannyEdgeDetection(Img, low, 200 );
-    e.laplacianEdgeDetection(Img);
-
-    I.Display(Img);
+     edges e;
+    Mat t = e.cannyEdgeDetection(Img, low,200);
+   // e.laplacianEdgeDetection(Img);
+    I.Display(t);
     
  }
 
