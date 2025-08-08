@@ -7,15 +7,10 @@ void imgproc::Contours()
 {
 }
 
-void imgproc::Display(cv::Mat M){
+void imgproc::Display(cv::Mat &M){
  if (M.empty())
 {printf("Display Function : Empty");  return ; }
 else {
-
     resize(M, M, Size(640, 480));
-    imshow("Context",M);
- 
-    
 }
-
 }

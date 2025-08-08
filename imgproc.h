@@ -26,7 +26,7 @@ public:
 
     /// @brief //display Image in Context
     /// @param M 
-    void Display(cv::Mat  M); 
+    void Display(cv::Mat & M); 
     
     //more to come 
     
