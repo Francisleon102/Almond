@@ -2,5 +2,10 @@
 
 Threads... **
 finding Contours ... Identiftying blobs (tries)_ //obsidian notes **
-fourier transform for image filtering ***
+Denoising Images
+    FFT 
+    non Local Denoising 
+
 Integrals for center detection 
+
+Automate info.md
