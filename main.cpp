@@ -22,6 +22,7 @@ void findImgContours(Mat & Img);
 void imgtoGrey(Mat & Img);
 void on_trackbar(Mat & M);
 void imagesRange(int value, void* data);
+void videoFrames();
 
 /// @brief Image processing functions here 
 /// @param 
@@ -30,8 +31,10 @@ imgproc I;
 #ifdef _WIN32
 cv::VideoCapture cap(0, cv::CAP_DSHOW);
 #else
-cv::VideoCapture cap(0, cv::CAP_V4L2);
+cv::VideoCapture cap(4, cv::CAP_V4L2);
 #endif//or use path /dev/video 
+
+
 
 const string path = "non_local.png";
 // Function to read an image from a file
@@ -45,6 +48,7 @@ Mat file() {
 }
 
 int main() {
+   
     Mat main_Img = file();
     Mat Img = main_Img.clone();
    // findImgContours(Img); // Call the function to find contours in the image
@@ -60,21 +64,17 @@ void on_trackbar(Mat & M){
     int sliderValue = 110;
     cv::createTrackbar("Slider", "Edges",&sliderValue,Max, imagesRange, &M);  //SilderVslue is mapped to int value in imageRange Function 
         // Add an event loop to keep the window and trackbar responsive
-    while (true) {
         //I.Display(M);
-        int key = cv::waitKey(30);
-        if (key == 27) break; // Exit on ESC
-    }
+        int key = cv::waitKey(0);
+        if (key == 27) ;// Exit on ESC
+    
     cv::destroyWindow("Edges");
 }
 
 
-
 void findImgContours(Mat & Img){
-   
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
-
     findContours(Img, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
     cv::Mat contourImage = cv::Mat::zeros(Img.size(), CV_8UC3);
     drawContours(contourImage,contours, -1, Scalar(0, 255, 0), cv::FILLED); // Draw all contours in green
@@ -85,16 +85,38 @@ void findImgContours(Mat & Img){
 };
 
  //could use some asyncronos programming 
+ /// @brief adjust values for image out puts 
  void imagesRange(int value, void* data){
     Mat & Img = *static_cast<Mat*>(data) ;  // castiing *data to Mat 
     double low = static_cast<double>(value);
-     edges e;
+    edges e;
     Mat t = e.cannyEdgeDetection(Img, low,200);
    // e.laplacianEdgeDetection(Img);
     I.Display(t);
     
  }
 
-   
+ void videoFrames(){
+    Mat frames; 
+     // Set MJPEG mode explicitly (fourcc 'MJPG')
+    cap.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M','J','P','G'));
+    cap.set(cv::CAP_PROP_FRAME_WIDTH, 1280);
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 720);
+    cap.set(cv::CAP_PROP_FPS, 120); 
+    while(true){
+    cap >> frames;
+    if (!cap.isOpened()) {
+        std::cerr << "Camera not opened.\n";
+        break;
+    }
+          cv::imshow("MJPEG Camera", frames);
+        if (cv::waitKey(1) == 'q') break;
+
+  
+ }
+  
+   cap.release();
+    cv::destroyAllWindows();
+}
    
 
