@@ -1,4 +1,4 @@
-#include "imgprocessing.h"
+#include "imgproc.h"
 #include "opencv4/opencv2/opencv.hpp"
 #include "opencv4/opencv2/imgproc.hpp"
 
@@ -14,6 +14,8 @@ else {
     resize(M, M, Size(640, 480));
     imshow("Output", M);}
 }
+
+
 
 Mat imgproc::Gray(cv::Mat & Img){
         if (Img.empty())

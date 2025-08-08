@@ -35,8 +35,8 @@ int main() {
 
     // Create a low-pass filter mask (center square is 1, rest is 0)
     Mat mask = Mat::zeros(complexImg.size(), CV_32F);
-    int r = complexImg.rows / 8; // radius of low frequencies to keep
-    int c = complexImg.cols / 8;
+    int r = complexImg.rows / 5; // radius of low frequencies to keep
+    int c = complexImg.cols / 5;
     mask(Rect(cx - c, cy - r, 2 * c, 2 * r)).setTo(1);
 
     // Apply mask to both real and imaginary parts
@@ -63,4 +63,6 @@ int main() {
     imwrite("FFT_denoised.png", invDFT);
     waitKey(0);
     return 0;
+
+    /// g++ temp.cpp -o temp `pkg-config --cflags --libs opencv4`
 }

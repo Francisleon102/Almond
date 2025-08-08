@@ -3,7 +3,7 @@
 #include "opencv4/opencv2/highgui.hpp"
 #include "opencv4/opencv2/imgproc.hpp"
 #include "opencv2/core.hpp"
-#include "imgprocessing.h"
+#include "imgproc.h"
 #include <iostream>
 #include <stdbool.h>
 #include <thread>
@@ -31,7 +31,7 @@ imgproc I;
 #ifdef _WIN32
 cv::VideoCapture cap(0, cv::CAP_DSHOW);
 #else
-cv::VideoCapture cap(4, cv::CAP_V4L2);
+cv::VideoCapture cap(5, cv::CAP_V4L2); // fix indexing 
 #endif//or use path /dev/video 
 
 
@@ -48,10 +48,11 @@ Mat file() {
 }
 
 int main() {
-   
+  
     Mat main_Img = file();
     Mat Img = main_Img.clone();
    // findImgContours(Img); // Call the function to find contours in the image
+   //videoFrames();
     on_trackbar(Img);
     printf("Ontrack was called ~");
     return 0;
@@ -112,7 +113,6 @@ void findImgContours(Mat & Img){
           cv::imshow("MJPEG Camera", frames);
         if (cv::waitKey(1) == 'q') break;
 
-  
  }
   
    cap.release();
