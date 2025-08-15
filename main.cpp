@@ -23,37 +23,20 @@ void imgtoGrey(Mat & Img);
 void on_trackbar(Mat & M);
 void imagesRange(int value, void* data);
 void videoFrames();
-int getWorkingCameraIndex();
 
 /// @brief Image processing functions here 
 /// @param 
 imgproc I;
 
-int getWorkingCameraIndex() {
-    int maxIndex = 10;
-    for (int i = 0; i < maxIndex; ++i) {
-        cv::VideoCapture testCap(i, cv::CAP_V4L2);
-        if (testCap.isOpened()) {
-            testCap.release();
-            return i;
-        }
-    }
-    return -1; // No working camera found
-
-
-}
-
-
-
 #ifdef _WIN32
-cv::VideoCapture cap(getWorkingCameraIndex(), cv::CAP_DSHOW);
+cv::VideoCapture cap(0, cv::CAP_DSHOW);
 #else
-cv::VideoCapture cap(getWorkingCameraIndex(), cv::CAP_V4L2); // fix indexing 
+cv::VideoCapture cap(5, cv::CAP_V4L2); // fix indexing 
 #endif//or use path /dev/video 
 
 
 
-const string path = "Images/Denoised/non_local.png";
+const string path = "Images/cir1.jpg";
 // Function to read an image from a file
 Mat file() {
     Mat img = imread(path, IMREAD_COLOR);
@@ -68,7 +51,7 @@ int main() {
   
     Mat main_Img = file();
     Mat Img = main_Img.clone();
-    findImgContours(Img); // Call the function to find contours in the image
+    //findImgContours(Img); // Call the function to find contours in the image
      videoFrames();
     //on_trackbar(Img);
     printf("Ontrack was called ~");
@@ -92,8 +75,14 @@ void on_trackbar(Mat & M){
 
 void findImgContours(Mat & Img){
     Mat C = I.Gray(Img);
-    cv::threshold(C, C,200,255,2);
-    I.Display(C);
+    vector<vector<Point>> contours;
+    vector<Vec4i> hierarchy;
+    findContours(C, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+    cv::Mat contourImage = cv::Mat::zeros(Img.size(), CV_8UC3);
+    drawContours(contourImage,contours, -1, Scalar(0, 255, 0), cv::FILLED); // Draw all contours in green
+    imwrite("Contours.jpg", contourImage); // Save the image with contours drawn
+    std::cout << "Found contours: " << contours.size() << "\n";
+    
 
 };
 

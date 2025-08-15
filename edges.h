@@ -17,7 +17,7 @@ public:
     }
     cv::Mat cannyEdgeDetection(cv::Mat & img, double  & low , double high){
         cv::Mat Cannyedges;
-        cv::Canny(img, Cannyedges, low, high); 
+        cv::Canny(img, Cannyedges, low, high,5,1); 
         printf("Canny edge detection applied.\n");
         // Optionally, save or display the edges image
         cv::imwrite("Images/canny_edges_output.jpg", Cannyedges);
