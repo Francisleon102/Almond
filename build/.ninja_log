@@ -1,0 +1,4 @@
+# ninja log v6
+2	1618	1754675543864663156	CMakeFiles/test_opencv.dir/imgproc.cpp.o	3f433413d9866718
+1	1669	1754675543863840343	CMakeFiles/test_opencv.dir/main.cpp.o	8d7136e64f31f8b3
+1669	1940	1754675545531633553	test_opencv	bd0bd2361b8c406f

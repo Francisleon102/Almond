@@ -48,7 +48,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "test_opencv::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-test_opencv-Debug-7beea55c945d82e8c697.json",
+					"jsonFile" : "target-test_opencv-Debug-c2807a75a83252d78f8b.json",
 					"name" : "test_opencv",
 					"projectIndex" : 0
 				}
@@ -58,12 +58,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/leon/Projects/Almond/build",
-		"source" : "/home/leon/Projects/Almond"
+		"build" : "/home/francis/Projects/Almond/build",
+		"source" : "/home/francis/Projects/Almond"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 7
 	}
 }
