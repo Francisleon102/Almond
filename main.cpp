@@ -52,8 +52,8 @@ int main() {
     Mat main_Img = file();
     Mat Img = main_Img.clone();
     //findImgContours(Img); // Call the function to find contours in the image
-     videoFrames();
-    //on_trackbar(Img);
+     //videoFrames();
+    on_trackbar(Img);
     printf("Ontrack was called ~");
     return 0;
     

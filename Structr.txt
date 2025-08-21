@@ -1,135 +1,78 @@
-
-
-Threads... **
-finding Contours ... Identiftying blobs (tries)_ //obsidian notes **
-Denoising Images
-    FFT 
-    non Local Denoising 
-
-Integrals for center detection 
-
-Automate info.md
-
-
-// detect_circles_moments.cpp
-#include <opencv2/opencv.hpp>
-#include <iostream>
-#include <vector>
-#include <cmath>
-
-using namespace cv;
-using namespace std;
-
-// Remove connected components that touch the image border (MATLAB: imclearborder)
-static void clearBorder(Mat &bw) {
-    Mat labels, stats, centroids;
-    int n = connectedComponentsWithStats(bw, labels, stats, centroids, 8, CV_32S);
-    for (int i = 1; i < n; ++i) {
-        int x = stats.at<int>(i, CC_STAT_LEFT);
-        int y = stats.at<int>(i, CC_STAT_TOP);
-        int w = stats.at<int>(i, CC_STAT_WIDTH);
-        int h = stats.at<int>(i, CC_STAT_HEIGHT);
-        bool touches = (x == 0) || (y == 0) ||
-                       (x + w >= bw.cols) || (y + h >= bw.rows);
-        if (touches) {
-            bw.setTo(0, labels == i);
-        }
-    }
-}
-
-// Remove small blobs by area (MATLAB: bwareaopen)
-static void areaOpen(Mat &bw, int minArea) {
-    Mat labels, stats, centroids;
-    int n = connectedComponentsWithStats(bw, labels, stats, centroids, 8, CV_32S);
-    for (int i = 1; i < n; ++i) {
-        int area = stats.at<int>(i, CC_STAT_AREA);
-        if (area < minArea) {
-            bw.setTo(0, labels == i);
-        }
-    }
-}
-
-// Fill holes inside blobs (MATLAB: imfill(...,'holes'))
-static void fillHoles(Mat &bw) {
-    // bw is 0/255, foreground=255
-    Mat inv; bitwise_not(bw, inv);
-    Mat flood = inv.clone();
-    // pad to avoid border issues
-    copyMakeBorder(flood, flood, 1,1,1,1, BORDER_CONSTANT, Scalar(0));
-    floodFill(flood, Point(0,0), Scalar(255));
-    // remove padding
-    flood = flood(Rect(1,1,bw.cols,bw.rows));
-    Mat holes; bitwise_not(flood, holes); // holes = interior 255
-    bitwise_or(bw, holes, bw);           // fill holes
-}
-
-int main() {
-    string path = "cann.jpg";
-    Mat I = imread(path, IMREAD_COLOR);
-    if (I.empty()) {
-        cerr << "Cannot read " << path << endl;
-        return 1;
-    }
-
-    Mat G; cvtColor(I, G, COLOR_BGR2GRAY);
-    medianBlur(G, G, 3); // small denoise
-
-    // --- Adaptive threshold (MATLAB: imbinarize(...,'adaptive','bright')) ---
-    Mat BW;
-    // tweak blockSize (odd, ~15–51) and C (bias). THRESH_BINARY => bright -> 255
-    int blockSize = 31; double C = -5.0;
-    adaptiveThreshold(G, BW, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, blockSize, C);
-
-    // imclearborder, bwareaopen, imfill holes
-    clearBorder(BW);
-    areaOpen(BW, 20);       // remove small specks
-    fillHoles(BW);          // rings -> filled disks
-
-    // Find contours (to compute area, perimeter, circularity)
-    vector<vector<Point>> contours;
-    findContours(BW.clone(), contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
-
-    // Collect centers/radii with circularity filter
-    struct Det { Point2d c; double r; double circ; double area; };
-    vector<Det> dets;
-
-    for (auto &cnt : contours) {
-        double area = contourArea(cnt);
-        if (area <= 0) continue;
-
-        Moments m = moments(cnt);
-        Point2d center(m.m10 / m.m00, m.m01 / m.m00);      // integral-based centroid
-        double perim = arcLength(cnt, true);
-        double circularity = (perim > 0) ? (4.0 * CV_PI * area / (perim * perim)) : 0.0;
-
-        // Equivalent diameter (same area as circle): Deq = sqrt(4A/pi); radius = Deq/2
-        double req = 0.5 * std::sqrt(4.0 * area / CV_PI);
-
-        // Filter like MATLAB: keep nearly circular blobs
-        if (circularity > 0.82) {
-            dets.push_back({center, req, circularity, area});
-        }
-    }
-
-    // Draw results and print coordinates
-    Mat vis; cvtColor(G, vis, COLOR_GRAY2BGR);
-    for (size_t i = 0; i < dets.size(); ++i) {
-        // green circle
-        circle(vis, dets[i].c, (int)std::round(dets[i].r), Scalar(0,255,0), 1, LINE_AA);
-        // red '+'
-        int s = 6;
-        line(vis, Point((int)dets[i].c.x - s, (int)dets[i].c.y),
-                  Point((int)dets[i].c.x + s, (int)dets[i].c.y), Scalar(0,0,255), 2, LINE_AA);
-        line(vis, Point((int)dets[i].c.x, (int)dets[i].c.y - s),
-                  Point((int)dets[i].c.x, (int)dets[i].c.y + s), Scalar(0,0,255), 2, LINE_AA);
-
-        printf("Circle %zu center: (%.2f, %.2f), r≈%.2f, circularity=%.3f\n",
-               i+1, dets[i].c.x, dets[i].c.y, dets[i].r, dets[i].circ);
-    }
-
-    imshow("Original", I);
-    imshow("Binary Filled", BW);
-    imshow("Detections", vis);
-    waitKey(0);
-    return 0;
-}
+Almond/
+├─ CMakeLists.txt
+├─ README.md
+├─ .cmake/                      # (present)
+├─ .vscode/
+├─ .idea/
+├─ build/                       # out-of-source, gitignored
+├─ CMakeFiles/                  # (generated; keep out of VCS)
+├─ Images/                      # → move into resources/images/
+├─ imgui/                       # (vendor UI lib; keep as is or external/)
+├─ misc/                        # (keep; non-critical assets/scripts)
+├─ app/                         # (present: if this is your entry, keep)
+├─ detect/                      # (present: likely NN/detection utils)
+├─ resources/
+│  ├─ shaders/
+│  │  ├─ basic.vert
+│  │  └─ basic.frag
+│  ├─ models/
+│  │  └─ ball.obj
+│  └─ images/
+│     ├─ sample_frame.png
+│     └─ (moved) canny_edges_output.jpg  ← from ./Images/
+├─ include/
+│  ├─ core/
+│  │  ├─ types.hpp
+│  │  └─ ring_buffer.hpp
+│  ├─ camera/
+│  │  ├─ camera_module.hpp
+│  │  └─ calibration.hpp
+│  ├─ tracking/
+│  │  ├─ tracking_module.hpp
+│  │  ├─ geometry.hpp
+│  │  └─ filters.hpp
+│  ├─ nn/
+│  │  └─ neural_network.hpp
+│  └─ render/
+│     ├─ rendering_module.hpp
+│     └─ gl_utils.hpp
+├─ src/
+│  ├─ main.cpp                  # (you have main.cpp)
+│  ├─ core/
+│  │  └─ ring_buffer.cpp
+│  ├─ camera/
+│  │  ├─ camera_module.cpp
+│  │  └─ calibration.cpp
+│  ├─ tracking/
+│  │  ├─ tracking_module.cpp
+│  │  ├─ geometry.cpp           # ← split from your imgproc/edges code
+│  │  └─ filters.cpp
+│  ├─ nn/
+│  │  └─ neural_network.cpp     # ← your detect/ code can live here
+│  └─ render/
+│     ├─ rendering_module.cpp
+│     └─ gl_utils.cpp
+├─ tests/
+│  ├─ CMakeLists.txt
+│  ├─ test_geometry.cpp
+│  ├─ test_filters.cpp
+│  └─ test_camera_mock.cpp
+├─ scripts/
+│  ├─ dataset_prep.py
+│  ├─ train_model.py
+│  └─ profiling/
+│     ├─ opencv_timers.py
+│     └─ nsys_capture.sh
+├─ temp/                        # (dev scratch) → consider gitignore or remove
+├─ legacy/                      # NEW: park one-off files here
+│  ├─ center.cpp
+│  ├─ edge.cpp
+│  ├─ edges.h
+│  ├─ imgproc.cpp               # (and any imgproc*.cpp variants)
+│  ├─ ImageInfo.h
+│  ├─ main.h
+│  ├─ main.o
+│  ├─ temp.cpp
+│  └─ non_local.png
+└─ docs/
+   └─ Almond.txt                # move plain notes here (from root)

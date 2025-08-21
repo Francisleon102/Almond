@@ -1,0 +1,70 @@
+Here’s a cleaned-up version of your project structure, tailored for your **camera-driven animation and tracking project** with OpenCV + OpenGL + C++ + neural nets, while keeping GPU/CPU optimizations in mind:
+
+---
+
+### 📂 **Project Root**
+
+* `README.md` → Overview, setup, and usage guide.
+* `CMakeLists.txt` → Build configuration (can include CUDA/OpenGL/OpenCV find modules).
+* `requirements.txt` → (Optional, only if Python scripts are used).
+
+---
+
+### 📂 **src/**
+
+Core source files:
+
+* `main.cpp` → Entry point; initializes camera, tracker, and renderer.
+* `camera_module.cpp/h` → Camera capture (OpenCV, V4L2, or SDK). Handles GPU memory transfers.
+* `tracking_module.cpp/h` → Object detection/tracking, triangulation for 3D coordinates. (CV + linear algebra).
+* `rendering_module.cpp/h` → Rendering with OpenGL/Ogre3D (buffers, shaders, transformations).
+* `neural_network.cpp/h` → Inference code (can be CPU fallback or CUDA-accelerated).
+
+---
+
+### 📂 **include/**
+
+* All public headers (`*.h`) for modular compilation.
+* Helps keep interfaces clean (`include/tracking_module.h`, etc.).
+
+---
+
+### 📂 **resources/**
+
+* `shaders/` → Vertex/fragment shaders (GLSL).
+* `models/` → 3D test objects (OBJ, FBX, etc.).
+* `images/` → Sample frames for debugging/training.
+
+---
+
+### 📂 **tests/**
+
+* Unit tests for modules (camera feed mock, coordinate triangulation checks, rendering validation).
+* Benchmarking tests for GPU vs CPU performance (important for your real-time goal).
+
+---
+
+### 📂 **scripts/**
+
+* `dataset_prep.py` → Dataset cleaning, augmentation.
+* `train_model.py` → Training/finetuning neural nets.
+* `profiling_tools/` → Scripts for GPU/CPU profiling (Nsight, OpenCV perf).
+
+---
+
+### 📂 **build/**
+
+* Out-of-source build directory for compiled binaries & CMake cache.
+
+---
+
+### ⚡ Notes on Optimization
+
+* Keep **GPU ↔ CPU transfers minimal** → allocate GPU buffers once and reuse.
+* Use **Eigen/cuBLAS/cuDNN** for heavy math in tracking/NN modules.
+* Consider **double buffering** for rendering to avoid frame drops.
+* If you expand, add a `modules/` subdir to isolate new features like Kalman filters, SLAM, etc.
+
+---
+
+👉 Do you want me to also sketch out a **class/module dependency diagram** (like how camera feeds into tracking, then into renderer), so you can visualize data flow in the project?
