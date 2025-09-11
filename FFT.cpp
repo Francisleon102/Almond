@@ -3,8 +3,13 @@ using namespace cv;
 
 int main() {
     Mat img = imread("Images/frame.jpg", IMREAD_GRAYSCALE);
+   std::cout << system("v4l2-ctl --list-devices") << std::endl;
+
     if (img.empty()) {
         printf("Image not found!\n");
+
+        
+    return 0;
         return -1;
     }
 
