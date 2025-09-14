@@ -31,7 +31,7 @@ imgproc I;
 #ifdef _WIN32
 cv::VideoCapture cap(0, cv::CAP_DSHOW);
 #else
-cv::VideoCapture cap(5, cv::CAP_V4L2); // fix indexing 
+cv::VideoCapture cap(2, cv::CAP_V4L2); // fix indexing 
 #endif//or use path /dev/video 
 
 
@@ -52,8 +52,8 @@ int main() {
     Mat main_Img = file();
     Mat Img = main_Img.clone();
     //findImgContours(Img); // Call the function to find contours in the image
-     //videoFrames();
-    on_trackbar(Img);
+    videoFrames();
+    //on_trackbar(Img);
     printf("Ontrack was called ~");
     return 0;
     
@@ -99,18 +99,22 @@ void findImgContours(Mat & Img){
  }
 
  void videoFrames(){
-    Mat frames; 
+    Mat frames ;
+    
      // Set MJPEG mode explicitly (fourcc 'MJPG')
     cap.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M','J','P','G'));
     cap.set(cv::CAP_PROP_FRAME_WIDTH, 1280);
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, 720);
     cap.set(cv::CAP_PROP_FPS, 120); 
+   
     while(true){
     cap >> frames;
+
     if (!cap.isOpened()) {
         std::cerr << "Camera not opened.\n";
         break;
     }
+    on_trackbar(frames);
           cv::imshow("MJPEG Camera", frames);
         if (cv::waitKey(1) == 'q') break;
 
