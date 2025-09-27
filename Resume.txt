@@ -1,7 +1,8 @@
 
-Resume using open indexes to loop and open all avaliable camera,,,, c ++ threads for cocurrwent running of cameras 
 
 
+Reurn frames from camera.cpp
+cnater of mass 
 
 
 
