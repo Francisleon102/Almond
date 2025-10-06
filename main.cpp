@@ -32,12 +32,6 @@ imgproc I;
   /// @brief Camera Handlin
   Camera cam;
 
-#ifdef _WIN32
-cv::VideoCapture cap(0, cv::CAP_DSHOW);
-#else
-cv::VideoCapture cap(2, cv::CAP_V4L2); // fix indexing 
-#endif//or use path /dev/video 
-
 
 
 const string path = "Images/cir1.jpg";
@@ -105,19 +99,15 @@ void findImgContours(Mat & Img){
  void videoFrames(){
     
     
-    Camera cam;
+Camera cam;
 int found = cam.initialize();
 std::cout << "Found cameras: " << found << ", cam.count.size(): " << cam.count.size() << ", cam.frames.size(): " << cam.frames.size() << "\n";
+cam.camera();
 
-// ensure frames vector matches count if you plan to reference frames[]
-cam.frames.resize(cam.count.size());
-
-for (size_t i = 0; i < cam.frames.size(); ++i) {
-    std::cout << "slot " << i << " device index " << cam.count[i] << "\n";
 }
     // Destructor will be called automatically when cam goes out of scope
     
- }
+ 
 
 
    

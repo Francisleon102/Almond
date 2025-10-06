@@ -4,6 +4,7 @@
 Reurn frames from camera.cpp - [x] 
 Denoising | prepocessing -[]
 cnater of mass -[]
+Template class for Mat , UMat and GPUmat
 Detect Circles -[]
 Camera Acceleration -[]
 Calibraton Steeoro -[]

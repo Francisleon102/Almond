@@ -11,9 +11,11 @@ void imgproc::Display(cv::Mat &M){
  if (M.empty())
 {printf("Display Function : Empty");  return ; }
 else {
-    resize(M, M, Size(640, 480));
+    resize(M, M, Size(p.width[0],p.height[0]));
     imshow("Output", M);}
-}
+{
+}}
+
 
 
 

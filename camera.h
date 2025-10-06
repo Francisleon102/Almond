@@ -29,6 +29,20 @@ public:
 	std::mutex frameMutex;
 	~Camera() = default;
 private:
+
+struct camera_resolution
+{
+    	// Use brace-init for Point2i elements. (4,7) is invalid here.
+	const std::vector<int> width = { {1920 }, {1280},{640}};
+   const  std::vector<int> height = { {1080 }, {720},{480}};
+   const  std::vector<int> fps = { {30 }, {60},{120}};
+
+}; camera_resolution p;
+
+
+
+
+
     
 };
 
