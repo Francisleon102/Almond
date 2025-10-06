@@ -28,7 +28,10 @@ using namespace cv;
 
 Camera::Camera(){
     // default constructor
+
 }
+
+
 
 int Camera::initialize() {
     
@@ -56,12 +59,15 @@ int Camera::initialize() {
 
 void  Camera::camera() {
     initialize();
-    std::vector<std::thread> threads;
+    std::vector<std::thread> threads; //opens vector of tthread operations
     // allocate frames slots
    
     for (size_t i = 0; i < count.size() ; i++) {
         std::cout << "Opening camera index: " << count[i] << std::endl;
-        threads.emplace_back(&Camera::videoFrames, this, count[i], (int)i);
+        threads.emplace_back(&Camera::videoFrames, this, count[i], (int)i); /*Videoframes are called 
+        and each device Id is i and used to specify each thread operations, so each i is just an instance of 
+        videoFrame running
+        */
     }
     // Optionally, join threads if you want to wait for them (will block until all windows are closed)
     for (auto& t : threads) {
@@ -94,7 +100,7 @@ void Camera::videoFrames(int index, int slot){
     }
         // show only this camera's frame
         {
-            std::lock_guard<std::mutex> lock(frameMutex);  // stop access to threads 
+            std::lock_guard<std::mutex> lock(frameMutex);  // stop access to threads to prevent corruption
             cv::imshow(windowName, frames[slot]);
         }
         if (cv::waitKey(1) == 'q') break;

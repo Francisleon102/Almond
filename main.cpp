@@ -19,7 +19,8 @@ using namespace std;
 using namespace cv;
 
 // Function Prototypes
-void findImgContours(Mat & Img);
+template<typename T>
+void findImgContours(T & Img);
 void imgtoGrey(Mat & Img);
 void on_trackbar(Mat & M);
 void imagesRange(int value, void* data);
@@ -49,8 +50,11 @@ int main() {
   
     Mat main_Img = file();
     Mat Img = main_Img.clone();
-    //findImgContours(Img); // Call the function to find contours in the image
-    videoFrames();
+    findImgContours(Img); // Call the function to find contours in the image
+    //videoFrames();
+    // Instantiate the template with a concrete type. Use cv::Mat here as an example.
+    Atype A;
+    A.init();
     //on_trackbar(Img);
     printf("Ontrack was called ~");
     return 0;
@@ -104,6 +108,30 @@ int found = cam.initialize();
 std::cout << "Found cameras: " << found << ", cam.count.size(): " << cam.count.size() << ", cam.frames.size(): " << cam.frames.size() << "\n";
 cam.camera();
 
+}
+
+// Templated findImgContours to accept cv::Mat or cv::UMat
+template<typename T>
+void findImgContours(T & Img) {
+    // If T is UMat, call UMat Gray and download to Mat for processing
+    Mat C;
+    if constexpr (std::is_same_v<T, cv::Mat>) {
+        C = I.Gray(Img);
+    } else {
+        cv::UMat u = I.Gray(Img);
+        u.copyTo(C);
+    }
+    if (C.empty()) {
+        std::cerr << "findImgContours: gray image empty\n";
+        return;
+    }
+    vector<vector<Point>> contours;
+    vector<Vec4i> hierarchy;
+    findContours(C, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+    cv::Mat contourImage = cv::Mat::zeros(Img.size(), CV_8UC3);
+    drawContours(contourImage, contours, -1, Scalar(0, 255, 0), cv::FILLED);
+    imwrite("Contours.jpg", contourImage);
+    std::cout << "Found contours: " << contours.size() << "\n";
 }
     // Destructor will be called automatically when cam goes out of scope
     

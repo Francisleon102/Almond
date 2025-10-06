@@ -22,7 +22,7 @@ public:
 
 	void camera();
 	int initialize();
-    std::vector <cv::Mat> grabFrames();
+    std::vector <cv::Mat> grabFrames(); 
 	std::vector<int> count;
 	void videoFrames(int index, int slots);
 	std::vector<cv::Mat> frames;
@@ -30,14 +30,13 @@ public:
 	~Camera() = default;
 private:
 
-struct camera_resolution
+struct display_resolution   //different preset display resolutions 
 {
-    	// Use brace-init for Point2i elements. (4,7) is invalid here.
-	const std::vector<int> width = { {1920 }, {1280},{640}};
-   const  std::vector<int> height = { {1080 }, {720},{480}};
-   const  std::vector<int> fps = { {30 }, {60},{120}};
-
-}; camera_resolution p;
+    // Use brace-init for resolution elements.
+    const std::vector<int> width = {1920, 1280, 640};
+    const std::vector<int> height = {1080, 720, 480};
+    const std::vector<int> fps = {30, 60, 120};
+};display_resolution p;
 
 
 
