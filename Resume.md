@@ -1,8 +1,13 @@
 
 
 
-Reurn frames from camera.cpp
-cnater of mass 
+Reurn frames from camera.cpp - [x] 
+Denoising | prepocessing -[]
+cnater of mass -[]
+Detect Circles -[]
+Camera Acceleration -[]
+Calibraton Steeoro -[]
+
 
 
 

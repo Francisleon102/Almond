@@ -13,6 +13,7 @@
 #include <vector>
 #include "main.h"
 #include <dlfcn.h>
+#include "camera.h"
 
 using namespace std;
 using namespace cv;
@@ -27,6 +28,9 @@ void videoFrames();
 /// @brief Image processing functions here 
 /// @param 
 imgproc I;
+
+  /// @brief Camera Handlin
+  Camera cam;
 
 #ifdef _WIN32
 cv::VideoCapture cap(0, cv::CAP_DSHOW);
@@ -99,29 +103,22 @@ void findImgContours(Mat & Img){
  }
 
  void videoFrames(){
-    Mat frames ;
     
-     // Set MJPEG mode explicitly (fourcc 'MJPG')
-    cap.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M','J','P','G'));
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, 1280);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 720);
-    cap.set(cv::CAP_PROP_FPS, 120); 
-   
-    while(true){
-    cap >> frames;
+    
+    Camera cam;
+int found = cam.initialize();
+std::cout << "Found cameras: " << found << ", cam.count.size(): " << cam.count.size() << ", cam.frames.size(): " << cam.frames.size() << "\n";
 
-    if (!cap.isOpened()) {
-        std::cerr << "Camera not opened.\n";
-        break;
-    }
-    on_trackbar(frames);
-          cv::imshow("MJPEG Camera", frames);
-        if (cv::waitKey(1) == 'q') break;
+// ensure frames vector matches count if you plan to reference frames[]
+cam.frames.resize(cam.count.size());
 
- }
-  
-   cap.release();
-    cv::destroyAllWindows();
+for (size_t i = 0; i < cam.frames.size(); ++i) {
+    std::cout << "slot " << i << " device index " << cam.count[i] << "\n";
 }
+    // Destructor will be called automatically when cam goes out of scope
+    
+ }
+
+
    
 
